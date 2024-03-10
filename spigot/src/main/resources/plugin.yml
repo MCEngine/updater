@@ -1,0 +1,5 @@
+author: MCEngine
+name: MCEngineUpdater
+version: ${version}
+main: com.github.mcengine.MCEngineUpdater
+api-version: 1.17

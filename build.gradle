@@ -1,0 +1,77 @@
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+version = project.findProperty(project.name + "version")
+group = 'com.github.mcengine'
+
+allprojects {
+    group = 'com.github.mcengine'
+
+    apply plugin: 'java'
+    apply plugin: 'com.github.johnrengelman.shadow'
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'https://libraries.minecraft.net'
+        }
+        maven {
+            url 'https://repo.papermc.io/repository/maven-public'
+        }
+        maven {
+            url 'https://oss.sonatype.org/content/groups/public'
+        }
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/central'
+        }
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
+        }
+        maven {
+            url 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
+            content {
+                includeGroup 'org.bukkit'
+                includeGroup 'org.spigotmc'
+            }
+        }
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    // Set submodules info
+    version = project.findProperty(project.name + "version")
+
+    // Disable the 'jar' task
+    jar.enabled = false
+
+    // Bukkit server
+    if (project.name == "spigot") {
+        // replace
+        processResources {
+            def props = [version: version]
+            inputs.properties props
+            filteringCharset 'UTF-8'
+            filesMatching('plugin.yml') {
+                expand props
+            }
+        }
+    }
+}
+
+dependencies {
+    implementation project(path: ':spigot', configuration: 'shadow')
+}
+
+shadowJar {
+    version = version
+    archiveClassifier = null
+    archiveBaseName.set('MCEngineUpdater')
+}
+
+jar.enabled = false
+build.dependsOn(shadowJar)
