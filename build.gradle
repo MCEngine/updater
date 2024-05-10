@@ -16,15 +16,6 @@ allprojects {
         mavenCentral()
         mavenLocal()
         maven {
-            url 'https://libraries.minecraft.net'
-        }
-        maven {
-            url 'https://repo.papermc.io/repository/maven-public'
-        }
-        maven {
-            url 'https://oss.sonatype.org/content/groups/public'
-        }
-        maven {
             url 'https://oss.sonatype.org/content/repositories/central'
         }
         maven {
