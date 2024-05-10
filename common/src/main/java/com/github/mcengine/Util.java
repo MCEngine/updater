@@ -25,7 +25,8 @@ public class Util {
         }
     }
 
-    public static void readfile(String provider) {
+    public static List<String> readFile(String provider) {
+        List<String> lines = new ArrayList<>();
         File file = new File(getPath() + "/" + provider + ".properties");
         if (!file.exists()) {
             // Create file with createFile() method give github gitlab .properties
@@ -34,13 +35,13 @@ public class Util {
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            int count = 1;
             while ((line = br.readLine()) != null) {
-                System.out.println(count + ":" + line);
-                count++;
+                lines.add(line);
             }
         } catch (IOException e) {
             System.out.println("Error reading file: " + e.getMessage());
         }
+
+        return lines;
     }
 }
