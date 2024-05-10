@@ -1,3 +1,5 @@
 rootProject.name = 'mcengineupdater'
 
+include('common')
+
 include('spigot')
