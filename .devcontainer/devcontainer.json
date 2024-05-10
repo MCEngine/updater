@@ -1,27 +1,15 @@
 {
-    "name": "Container",
-    "image": "mcr.microsoft.com/devcontainers/java:17",
-    "features": {
-        "ghcr.io/devcontainers/features/java:1": {
-        "version": "none",
-        "installMaven": "false",
-        "installGradle": "true"
-        },
-        "ghcr.io/devcontainers-contrib/features/ant-sdkman:2": {}
-    },
-    "customizations": {
-        "vscode": {
-            "settings": {
-                "workbench.colorTheme": "Default Dark Modern" // Dark Modern
-            },
-            "extensions": [
-                "GitHub.copilot", // Github Copilot
-                "alefragnani.bookmarks", // Book Marks
-                "vscjava.vscode-java-pack", // Java pack
-                "redhat.java", // RedHat
-                "vscjava.vscode-gradle", // Gradle
-                "eamodio.gitlens" // GitLens
-            ]
-        }
+  "name": "Container",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "workbench.colorTheme": "Default Dark Modern" // Dark Modern
+      },
+      "extensions": [
+        "ms-azuretools.vscode-docker", // Docker
+        "alefragnani.bookmarks", // Book Marks
+        "eamodio.gitlens" // GitLens
+      ]
     }
+  }
 }
