@@ -16,7 +16,7 @@
             },
             "extensions": [
                 "GitHub.copilot", // Github Copilot
-                "alefragnani.bookmarks", // Booke Marks
+                "alefragnani.bookmarks", // Book Marks
                 "vscjava.vscode-java-pack", // Java pack
                 "redhat.java", // RedHat
                 "vscjava.vscode-gradle", // Gradle
