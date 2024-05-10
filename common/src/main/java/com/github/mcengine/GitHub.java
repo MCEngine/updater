@@ -43,26 +43,6 @@ public class GitHub {
         }
     }
 
-    private static boolean isNewerVersion(String currentTag, String latestTag) {
-        // Implement your version comparison logic here
-        // This is a simplified example assuming semantic versioning format (X.Y.Z)
-        String[] currentParts = currentTag.split("\\.");
-        String[] latestParts = latestTag.split("\\.");
-
-        for (int i = 0; i < Math.min(currentParts.length, latestParts.length); i++) {
-            int currentVersion = Integer.parseInt(currentParts[i]);
-            int latestVersion = Integer.parseInt(latestParts[i]);
-            if (latestVersion > currentVersion) {
-                return true;
-            } else if (latestVersion < currentVersion) {
-                return false;
-            }
-        }
-
-        // If versions are identical up to the compared parts, consider them equal
-        return false;
-    }
-
     private static String parseJsonForTagName(String json) {
         // This is a simplified parsing example. You can use a JSON parsing library for a more robust solution
         int start = json.indexOf("\"tag_name\": \"") + 14;
@@ -75,7 +55,7 @@ public class GitHub {
             String tag_current = Util.getCurrentTag();
             String tag_latest = getLatestTag(owner, repo);
 
-            if (isNewerVersion(tag_current, tag_latest)) {
+            if (Util.isNewerVersion(tag_current, tag_latest)) {
                 System.out.println("New version available: " + tag_latest);
             } else {
                 System.out.println("No updates available");

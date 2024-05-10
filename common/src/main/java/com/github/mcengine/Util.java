@@ -46,4 +46,24 @@ public class Util {
 
         return lines;
     }
+
+    public static boolean isNewerVersion(String currentTag, String latestTag) {
+        // Implement your version comparison logic here
+        // This is a simplified example assuming semantic versioning format (X.Y.Z)
+        String[] currentParts = currentTag.split("\\.");
+        String[] latestParts = latestTag.split("\\.");
+
+        for (int i = 0; i < Math.min(currentParts.length, latestParts.length); i++) {
+            int currentVersion = Integer.parseInt(currentParts[i]);
+            int latestVersion = Integer.parseInt(latestParts[i]);
+            if (latestVersion > currentVersion) {
+                return true;
+            } else if (latestVersion < currentVersion) {
+                return false;
+            }
+        }
+
+        // If versions are identical up to the compared parts, consider them equal
+        return false;
+    }
 }
