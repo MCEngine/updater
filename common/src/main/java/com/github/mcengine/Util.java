@@ -24,8 +24,8 @@ public class Util {
     public static void readfile(String provider) {
         File file = new File(getPath() + "/" + provider + ".properties");
         if (!file.exists()) {
-            System.out.println("File not found");
-            return;
+            // Create file with createFile() method give github gitlab .properties
+            createFile(file);
         }
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
