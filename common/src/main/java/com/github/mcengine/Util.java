@@ -10,6 +10,17 @@ public class Util {
         return System.getProperty("user.dir") + "/plugins/Updater";
     }
 
+    public static void createFile(File file) {
+        if (!file.exists()) {
+            try {
+                file.getParentFile().mkdirs();
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("Error creating file: " + e.getMessage());
+            }
+        }
+    }
+
     public static void readfile(String provider) {
         File file = new File(getPath() + "/" + provider + ".properties");
         if (!file.exists()) {
