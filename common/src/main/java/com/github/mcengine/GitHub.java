@@ -81,7 +81,11 @@ public class GitHub {
                 System.out.println("No updates available");
             }
         } catch (Exception e) {
-            System.out.println("Error occurred: " + e.getMessage());
+            System.out.println("Provider : GitHub");
+            System.out.println("Owner : " + owner);
+            System.out.println("Repository : " + repo);
+            System.out.println(e.getMessage());
+            System.out.println("=".repeat(e.getMessage().length()));
         }
     }
 }
