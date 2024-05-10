@@ -1,4 +1,4 @@
-author: MCEngine
+author: ${author}
 name: MCEngineUpdater
 version: ${version}
 main: com.github.mcengine.MCEngineUpdater

@@ -3,6 +3,7 @@ plugins {
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
+author = project.findProject("author")
 version = project.findProperty(project.name + "version")
 group = 'com.github.mcengine'
 
@@ -44,7 +45,7 @@ subprojects {
     if (project.name == "spigot") {
         // replace
         processResources {
-            def props = [version: version]
+            def props = [author: author, version: version]
             inputs.properties props
             filteringCharset 'UTF-8'
             filesMatching('plugin.yml') {
