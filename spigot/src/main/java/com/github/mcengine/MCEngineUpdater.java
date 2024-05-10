@@ -2,8 +2,6 @@ package com.github.mcengine;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.mcegnine.Util;
-
 public class MCEngineUpdater extends JavaPlugin {
 
     @Override
