@@ -2,7 +2,7 @@ package com.github.mcengine;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.mcegnine.util;
+import com.github.mcegnine.Util;
 
 public class MCEngineUpdater extends JavaPlugin {
 
@@ -12,7 +12,7 @@ public class MCEngineUpdater extends JavaPlugin {
         getServer().getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
             @Override
             public void run() {
-                util.readfile("github");
+                Util.readfile("github");
             }
         }, 0L, 20L * 60);
     }

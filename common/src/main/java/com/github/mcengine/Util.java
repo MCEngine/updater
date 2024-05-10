@@ -5,7 +5,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class util {
+public class Util {
     public static String getPath() {
         return System.getProperty("user.dir") + "/plugins/Updater";
     }
