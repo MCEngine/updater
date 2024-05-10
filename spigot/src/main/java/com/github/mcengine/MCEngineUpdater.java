@@ -13,13 +13,21 @@ public class MCEngineUpdater extends JavaPlugin {
             @Override
             public void run() {
                 try {
-                    List<String> datas = new ArrayList<>();
-                    datas = Util.readFile("GitHub");
-                    for (String data: datas) {
-                        String[] parts = data.split("/");
+                    List<String> github_datas = new ArrayList<>();
+                    github_datas = Util.readFile("GitHub");
+                    for (String data: github_datas) {
+                        String[] parts = github_datas.split("/");
                         String owner = parts[0];
                         String repo = parts[1];
                         GitHub.run(owner, repo);
+                    }
+                    List<String> gitlab_datas = new ArrayList<>();
+                    gitlab_datas = Util.readFile("GitLab");
+                    for (String data: github_datas) {
+                        String[] parts = gitlab_datas.split("/");
+                        String owner = parts[0];
+                        String repo = parts[1];
+                        GitLab.run(owner, repo);
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
