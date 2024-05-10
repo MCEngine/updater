@@ -1,55 +1,62 @@
 package com.github.mcengine;
 
 public class GitHub {
-    private static final String API_URL = "https://api.github.com/repos/%s/%s/releases/latest";
-    private static final String DOWNLOAD_URL_PREFIX = "https://github.com/%s/%s/releases/download/%s/";
+    private final String owner;
+    private final String repo;
+    URL url;
 
-    public void downloadFile(String owner, String repo, String fileName) throws IOException {
-        // 1. Get the latest release information
-        String latestReleaseUrl = String.format(API_URL, owner, repo);
-        URL url = new URL(latestReleaseUrl);
+    public GitHub(String owner, String repo) {
+        this.owner = owner;
+        this.repo = repo;
+    }
+
+    public static String getLatestTag(String owner, String repo) throws IOException {
+        URL url = new URL("https://api.github.com/repos/" + owner + "/" + repo + "/releases/latest");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
-        connection.setRequestProperty("User-Agent", "MyJavaApp");
 
         if (connection.getResponseCode() != 200) {
-            throw new IOException("Failed to get latest release: " + connection.getResponseMessage());
+            throw new IOException("Error: HTTP code " + connection.getResponseCode());
         }
 
-        String response = new String(connection.getInputStream().readAllBytes());
-        JSONObject releaseJson = new JSONObject(response);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuilder response = new StringBuilder();
+        String line;
 
-        // 2. Extract download URL for the specific file
-        String downloadUrl = null;
-        JSONArray assets = releaseJson.optJSONArray("assets");
-        if (assets != null) {
-            for (int i = 0; i < assets.length(); i++) {
-                JSONObject asset = assets.getJSONObject(i);
-                String assetName = asset.getString("name");
-                if (assetName.equals(fileName)) {
-                    downloadUrl = String.format(DOWNLOAD_URL_PREFIX, owner, repo, releaseJson.getString("tag_name"), assetName);
-                    break;
-                }
+        while ((line = reader.readLine()) != null) {
+            response.append(line);
+        }
+        reader.close();
+
+        // Parse JSON to extract tag name
+        String tagName = parseJsonForTagName(response.toString());
+        return tagName;
+    }
+
+    public static boolean isNewerVersion(String currentTag, String latestTag) {
+        // Implement your version comparison logic here
+        // This is a simplified example assuming semantic versioning format (X.Y.Z)
+        String[] currentParts = currentTag.split("\\.");
+        String[] latestParts = latestTag.split("\\.");
+        
+        for (int i = 0; i < Math.min(currentParts.length, latestParts.length); i++) {
+            int currentVersion = Integer.parseInt(currentParts[i]);
+            int latestVersion = Integer.parseInt(latestParts[i]);
+            if (latestVersion > currentVersion) {
+                return true;
+            } else if (latestVersion < currentVersion) {
+                return false;
             }
         }
+        
+        // If versions are identical up to the compared parts, consider them equal
+        return false;
+    }
 
-        if (downloadUrl == null) {
-            throw new IOException("File not found in the latest release: " + fileName);
-        }
-
-        // 3. Download the file
-        connection = (HttpURLConnection) new URL(downloadUrl).openConnection();
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("User-Agent", "MyJavaApp");
-
-        if (connection.getResponseCode() != 200) {
-            throw new IOException("Failed to download file: " + connection.getResponseMessage());
-        }
-
-        try (FileOutputStream outputStream = new FileOutputStream(fileName)) {
-            outputStream.write(connection.getInputStream().readAllBytes());
-        }
-
-        System.out.println("File downloaded successfully: " + fileName);
+    public static String parseJsonForTagName(String json) {
+        // This is a simplified parsing example. You can use a JSON parsing library for a more robust solution
+        int start = json.indexOf("\"tag_name\": \"") + 14;
+        int end = json.indexOf("\"", start);
+        return json.substring(start, end);
     }
 }
