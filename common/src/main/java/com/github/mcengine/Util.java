@@ -6,6 +6,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Util {
+    public static String getCurrentTag() {
+        return "1.0.0";
+    }
+
     public static String getPath() {
         return System.getProperty("user.dir") + "/plugins/Updater";
     }
