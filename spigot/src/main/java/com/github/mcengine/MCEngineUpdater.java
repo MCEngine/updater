@@ -13,25 +13,20 @@ public class MCEngineUpdater extends JavaPlugin {
             @Override
             public void run() {
                 try {
-                    List<String> github_datas = new ArrayList<>();
-                    github_datas = Util.readFile("GitHub");
-                    for (String data: github_datas) {
-                        String[] parts = data.split("/");
-                        String owner = parts[0];
-                        String repo = parts[1];
-                        GitHub.run(owner, repo);
-                    }
-                    List<String> gitlab_datas = new ArrayList<>();
-                    gitlab_datas = Util.readFile("GitLab");
-                    for (String data: gitlab_datas) {
-                        String[] parts = data.split("/");
-                        String owner = parts[0];
-                        String repo = parts[1];
-                        GitLab.run(owner, repo);
+                    String[] providers = {"GitHub", "GitLab"};
+                    for (String provider: providers) {
+                        List<String> datas = new ArrayList<>();
+                        datas = Util.readFile(provider);
+                        for (String data: datas) {
+                            String[] parts = data.split(":");
+                            String owner = parts[0];
+                            String repo = parts[1];
+                            String tag_current = parts[2];
+                        }
                     }
                 } catch (Exception e) {
                     System.out.println(e.getMessage());
-                }
+                }     
             }
         }, 0L, 20L * 60);
     }
