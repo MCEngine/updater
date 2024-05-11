@@ -2,6 +2,8 @@ package com.github.mcengine;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.lang.Class;
+import java.lang.reflect.Method;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,31 +15,37 @@ public class MCEngineUpdater extends JavaPlugin {
             @Override
             public void run() {
                 try {
+                    System.out.println("Direcly use method, GitHub Get version: " + GitHub.getLatestTag("MCEngine", "mcengine"));
                     String[] providers = {"GitHub"};
                     for (String provider: providers) {
+                        Class<?> clazz = Class.forName("com.github.mcengine." + provider);
+
                         List<String> datas = new ArrayList<>();
                         datas = Util.readFile(provider);
-                        
                         for (String data: datas) {
-                            String[] split = data.split(":");
-                            String owner = split[0];
-                            String repo = split[1];
-                            String version = split[2];
-                            
-                            Class clazz = Class.forName("com.github.mcengine." + provider);
-                            String tag_latest = (String) clazz.getMethod("getLatestTag").invoke(null, owner, repo);
+                            String[] parts = data.split(":");
 
-                            System.out.println("Provider: " + provider);
-                            System.out.println("Owner: " + owner);
-                            System.out.println("Repo: " + repo);
-                            System.out.println("Current version: " + version);
-                            System.out.println("Latest version: " + tag_latest);
-                            System.out.println("=".repeat(tag_latest.length()));
+                            // Data format: owner:repo:tag
+                            String owner = parts[0];
+                            String repo = parts[1];
+                            String tag_current = parts[2];
+
+                            // Get latest tag from Provider
+                            String tag_latest = (String) clazz.getMethod("getLatestTag", String.class, String.class).invoke(null, owner, repo);
+
+                            if (Util.isNewerVersion(tag_current, tag_latest)) {
+                                // Notify user about new version
+                                System.out.println("Owner : " + owner);
+                                System.out.println("Repository : " + repo);
+                                System.out.println("Current version : " + tag_current);
+                                System.out.println("Latest version : " + tag_latest);
+                                System.out.println("=".repeat(tag_latest.length()));
+                            }
                         }
                     }
                 } catch (Exception e) {
-                    System.out.println("Error: " + e.getMessage());
-                }               
+                    System.out.println(e.getMessage());
+                }     
             }
         }, 0L, 20L * 60);
     }
