@@ -23,7 +23,7 @@ public class MCEngineUpdater extends JavaPlugin {
                     }
                     List<String> gitlab_datas = new ArrayList<>();
                     gitlab_datas = Util.readFile("GitLab");
-                    for (String data: github_datas) {
+                    for (String data: gitlab_datas) {
                         String[] parts = data.split("/");
                         String owner = parts[0];
                         String repo = parts[1];
