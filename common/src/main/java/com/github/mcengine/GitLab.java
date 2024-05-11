@@ -9,7 +9,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class GitLab {
-    private static String getLatestTag(String owner, String repo) throws IOException {
+    public static String getLatestTag(String owner, String repo) throws IOException {
         URI uri;
         try {
             uri = new URI("https", "gitlab.com", "/api/v4/projects/" + owner + "%2F" + repo + "/repository/tags?order_by=updated&sort=desc&page=1&per_page=1", null);
@@ -43,7 +43,7 @@ public class GitLab {
         }
     }
 
-    private static String parseJsonForTagName(String json) {
+    public static String parseJsonForTagName(String json) {
         // This is a simplified parsing example. You can use a JSON parsing library for a more robust solution
         int start = json.indexOf("\"name\": \"") + 9;
         int end = json.indexOf("\"", start);
