@@ -24,7 +24,7 @@ public class MCEngineUpdater extends JavaPlugin {
                             String repo = split[1];
                             String version = split[2];
                             
-                            Class clazz = Class.forName("com.github.mcengine." + provider + "Provider");
+                            Class clazz = Class.forName("com.github.mcengine." + provider);
                             String tag_latest = (String) clazz.getMethod("getLatestTag").invoke(null, owner, repo);
 
                             System.out.println("Provider: " + provider);
