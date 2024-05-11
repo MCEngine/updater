@@ -38,7 +38,7 @@ public class MCEngineUpdater extends JavaPlugin {
                                 System.out.println("Repository : " + repo);
                                 System.out.println("Current version : " + tag_current);
                                 System.out.println("Latest version : " + tag_latest);
-                                System.out.println("=".repeat(tag_latest.length()));
+                                System.out.println("=".repeat(10));
                             }
                         }
                     }
