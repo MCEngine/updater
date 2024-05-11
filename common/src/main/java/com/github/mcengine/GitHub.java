@@ -49,23 +49,4 @@ public class GitHub {
         int end = json.indexOf("\"", start);
         return json.substring(start, end);
     }
-
-    public static void run(String owner, String repo) throws IOException {
-        try {
-            String tag_current = Util.getCurrentTag();
-            String tag_latest = getLatestTag(owner, repo);
-
-            if (Util.isNewerVersion(tag_current, tag_latest)) {
-                System.out.println("New version available: " + tag_latest);
-            } else {
-                System.out.println("No updates available");
-            }
-        } catch (Exception e) {
-            System.out.println("Provider : GitHub");
-            System.out.println("Owner : " + owner);
-            System.out.println("Repository : " + repo);
-            System.out.println(e.getMessage());
-            System.out.println("=".repeat(e.getMessage().length()));
-        }
-    }
 }
