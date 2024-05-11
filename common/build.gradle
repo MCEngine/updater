@@ -1,3 +1,7 @@
 plugins {
     id 'java-library'
 }
+
+dependencies {
+    implementation 'org.json:json:20201115' // JSON parsing library
+}
