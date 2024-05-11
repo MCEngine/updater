@@ -15,7 +15,6 @@ public class MCEngineUpdater extends JavaPlugin {
             @Override
             public void run() {
                 try {
-                    System.out.println("Direcly use method, GitHub Get version: " + GitHub.getLatestTag("MCEngine", "mcengine"));
                     String[] providers = {"GitHub"};
                     for (String provider: providers) {
                         Class<?> clazz = Class.forName("com.github.mcengine." + provider);
