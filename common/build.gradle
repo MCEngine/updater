@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation 'org.json:json:20201115' // JSON parsing library
+    implementation 'org.json:json:20240303' // JSON parsing library
 }
