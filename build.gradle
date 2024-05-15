@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'maven-publish'
 }
 
 author = project.findProject("author")
@@ -51,6 +52,34 @@ subprojects {
             filesMatching('plugin.yml') {
                 expand props
             }
+        }
+    }
+}
+
+publishing {
+    repositories {
+        maven {
+            name = 'GitHubPackages'
+            url = uri('https://maven.pkg.github.com/MCEngine/artifact')
+            credentials {
+                username = System.getenv('GITHUB_USER')
+                password = System.getenv('MCENGINE_GITHUB_TOKEN_PKG')
+            }
+        }
+
+        maven {
+            name = 'mavenCentral'
+            url = uri('https://oss.sonatype.org/service/local/staging/deploy/maven2/')
+            credentials {
+                username = System.getenv('SONATYPE_USER')
+                password = System.getenv('SONATYPE_TOKEN')
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+            artifact shadowJar
         }
     }
 }
